@@ -1,0 +1,54 @@
+# Set up services
+services:
+  # Database
+  mariadb:
+    build:
+      context: .
+      dockerfile: srcs/MariaDB/Dockerfile
+    # Load .env
+    env_file:
+      - .env
+    environment:
+    networks:
+      - inception
+    volumes: # volume_name:path/to/container_folder
+      - database_data:/var/lib/mysql
+    restart: always
+	
+  # Website
+  wordpress:
+    build:
+      context: .
+      dockerfile: srcs/WordPress/Dockerile
+    env_file:
+      - .env
+    environment:
+    networks:
+      - inception
+    volumes:
+      - website_data:/var/www/html
+    restart: always
+
+  # Web server  
+  nginx:
+    build:
+      context: .
+      dockerfile: srcs/nginx/Dockerfile
+    env_file:
+      - .env
+    environment:
+    ports: # Port forwarding, allows access from outside Docker container
+      - 443:443 # host:container
+    networks:
+      - inception
+    restart: always
+
+# Create a network to link services
+networks:
+  inception:
+    driver: bridge
+
+# Save data outside of container
+volumes:
+  website_data:
+  database_data:
