@@ -4,22 +4,24 @@ services:
   mariadb:
     build:
       context: .
-      dockerfile: srcs/MariaDB/Dockerfile
+      dockerfile: ./srcs/MariaDB/Dockerfile
     # Load .env
     env_file:
       - .env
     environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
     networks:
       - inception
     volumes: # volume_name:path/to/container_folder
       - database_data:/var/lib/mysql
     restart: always
-	
+
   # Website
   wordpress:
     build:
       context: .
-      dockerfile: srcs/WordPress/Dockerile
+      dockerfile: ./srcs/WordPress/Dockerfile
     env_file:
       - .env
     environment:
@@ -33,7 +35,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: srcs/nginx/Dockerfile
+      dockerfile: ./srcs/nginx/Dockerfile
     env_file:
       - .env
     environment:
@@ -50,5 +52,5 @@ networks:
 
 # Save data outside of container
 volumes:
-  website_data:
   database_data:
+  website_data:
