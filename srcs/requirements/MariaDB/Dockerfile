@@ -1,16 +1,16 @@
 FROM alpine:3.24
 
-RUN apt-get update && apt-get install -y mariadb-server && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add --no-cache mariadb mariadb-client && \
+    mkdir -p /run/mysqld /docker-entrypoint-initdb.d && \
+    chown -R mysql:mysql /run/mysqld
+
+COPY ./srcs/requirements/MariaDB/config/ /etc/mysql/
+COPY ./srcs/requirements/MariaDB/utils/init.sql.template /docker-entrypoint-initdb.d/
+COPY ./srcs/requirements/MariaDB/utils/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 3306
-COPY ./srcs/MariaDB/conf/ /etc/mysql/
 
-RUN mkdir ./entrypoint-initdb.d
-COPY ./utils/init.sql.template /entrypoint-initdb.d
-RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
-
-COPY ./utils/entrypoint.sh ./
-RUN chmod +x entrypoint.sh
-
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["mysqld"]
