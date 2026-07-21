@@ -24,7 +24,6 @@ services:
       dockerfile: ./srcs/WordPress/Dockerfile
     env_file:
       - .env
-    environment:
     networks:
       - inception
     volumes:
@@ -38,7 +37,6 @@ services:
       dockerfile: ./srcs/nginx/Dockerfile
     env_file:
       - .env
-    environment:
     ports: # Port forwarding, allows access from outside Docker container
       - 443:443 # host:container
     networks:

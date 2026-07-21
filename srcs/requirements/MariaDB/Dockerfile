@@ -1,8 +1,8 @@
 FROM alpine:3.24
 
-RUN apk update && apk add --no-cache mariadb mariadb-client gettext && \
-	mkdir -p /run/mysqld /docker-entrypoint-initdb.d && \
-	chown -R mysql:mysql /run/mysqld
+RUN apk update && apk add --no-cache mariadb mariadb-client gettext su-exec && \
+	mkdir -p /run/mysqld /docker-entrypoint-initdb.d /var/lib/mysql && \
+	chown -R mysql:mysql /run/mysqld /var/lib/mysql
 
 COPY ./config/ /etc/mysql/
 COPY ./utils/init.sql.template /docker-entrypoint-initdb.d/
