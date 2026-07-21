@@ -3,8 +3,8 @@ services:
   # Database
   mariadb:
     build:
-      context: .
-      dockerfile: ./srcs/MariaDB/Dockerfile
+      context: ./srcs/requirements/MariaDB
+      dockerfile: Dockerfile
     # Load .env
     env_file:
       - .env
@@ -31,7 +31,7 @@ services:
       - website_data:/var/www/html
     restart: always
 
-  # Web server  
+  # Web server
   nginx:
     build:
       context: .
