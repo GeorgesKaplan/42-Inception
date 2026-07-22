@@ -1,8 +1,10 @@
 FROM alpine:3.24
 
 RUN apk update && apk add --no-cache curl php-fpm php-mysqli && \
-	mkdir -p /run/php && \
-	chown www-data:www-data /run/php
+	addgroup -S www-data || true && \
+	adduser -D -S -G www-data www-data || true && \
+	mkdir -p /run/php /etc/php/8.2/fpm/pool.d && \
+	chown -R www-data:www-data /run/php
 
 COPY ./config/www.cnf /etc/php/8.2/fpm/pool.d
 WORKDIR /var/www/html
