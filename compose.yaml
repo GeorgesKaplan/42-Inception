@@ -11,6 +11,8 @@ services:
     environment:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
     networks:
       - inception
     volumes: # volume_name:path/to/container_folder
