@@ -22,8 +22,8 @@ services:
   # Website
   wordpress:
     build:
-      context: .
-      dockerfile: ./srcs/WordPress/Dockerfile
+      context: ./srcs/requirements/WordPress
+      dockerfile: Dockerfile
     env_file:
       - .env
     networks:
