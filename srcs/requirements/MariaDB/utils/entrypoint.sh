@@ -1,4 +1,5 @@
 #!/bin/sh
+
 set -eu
 
 if [ -f /docker-entrypoint-initdb.d/init.sql.template ]; then
