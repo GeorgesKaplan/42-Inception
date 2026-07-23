@@ -1,6 +1,11 @@
 #!/bin/sh
 set -eu
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BWHITE='\033[1;37m'
+DEFAULT='\033[0m'
+
 # echo "=== TEST: curl ==="
 # if command -v curl >/dev/null 2>&1; then
 #   curl --version | head -n 1
@@ -19,22 +24,29 @@ set -eu
 
 # Install WP-CLI only once so the container can manage WordPress from the shell.
 if [ ! -f /usr/local/bin/wp ]; then
+	echo -e "${BWHITE}> Installing WP-CLI...${DEFAULT}"
 	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 	chmod +x wp-cli.phar
 	mv wp-cli.phar /usr/local/bin/wp
+
+	if [ ! -f /usr/local/bin/wp ]; then
+		echo -e "${RED}WP-CLI installation failed.${DEFAULT}"
+	else
+		echo -e "${GREEN}WP-CLI successfully installed.${DEFAULT}"
+	fi
 fi
 
 # Download and extract WordPress if the application has not been installed yet.
 if [ ! -f /var/www/html/wordpress/index.php ]; then
-	echo "Installing Wordpress..."
+	echo -e "${BWHITE}> Installing Wordpress...${DEFAULT}"
 	curl -O https://wordpress.org/latest.tar.gz
 	mv latest.tar.gz /tmp/wordpress.tar.gz
 	tar xf /tmp/wordpress.tar.gz -C /var/www/html && rm /tmp/wordpress.tar.gz
 
 	if [ ! -f /var/www/html/wordpress/index.php ]; then
-		echo "WordPress installation failed."
+		echo -e "${RED}WordPress installation failed.${DEFAULT}"
 	else
-		echo "Wordpress successfully installed."
+		echo -e "${GREEN}Wordpress successfully installed.${DEFAULT}"
 	fi
 fi
 
