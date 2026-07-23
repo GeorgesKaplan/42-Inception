@@ -1,4 +1,21 @@
 #!/bin/sh
+set -eu
+
+# echo "=== TEST: curl ==="
+# if command -v curl >/dev/null 2>&1; then
+#   curl --version | head -n 1
+# else
+#   echo "curl is not installed"
+#   exit 1
+# fi
+
+# echo "=== TEST: php ==="
+# if command -v php >/dev/null 2>&1; then
+#   php8 -v | head -n 1
+# else
+#   echo "php is not installed"
+#   exit 1
+# fi
 
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
