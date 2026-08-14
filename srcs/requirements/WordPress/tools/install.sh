@@ -6,18 +6,6 @@ GREEN='\033[0;32m'
 BWHITE='\033[1;37m'
 DEFAULT='\033[0m'
 
-# TEST PURPOSES ONLY!!! TODO: REMOVE BEFORE FINAL PUSH!
-MYSQL_DATABASE=wordpressdb
-MYSQL_USER=wordpressdbuser
-MYSQL_PASSWORD=wordpressdbpassword
-MYSQL_HOSTNAME=mariadb
-DOMAIN_NAME=localhost
-TITLE=Inception
-WP_ADMIN_USER=admin
-WP_ADMIN_PASS=adminpassword
-WP_USER=user
-WP_PASS=userpassword
-
 # Define the target path for WP-CLI operations so it works inside the WordPress directory.
 AV_PATH="--path=/var/www/html/wordpress"
 
@@ -51,10 +39,10 @@ fi
 
 # Generate an actual wp-config.php from the sample file using environment variables.
 if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
-	sed -i "s/database_name_here/$MYSQL_DATABASE/g" /var/www/html/wordpress/wp-config-sample.php
-	sed -i "s/localhost/$MYSQL_HOSTNAME/g" /var/www/html/wordpress/wp-config-sample.php
-	sed -i "s/username_here/$MYSQL_USER/g" /var/www/html/wordpress/wp-config-sample.php
-	sed -i "s/password_here/$MYSQL_PASSWORD/g" /var/www/html/wordpress/wp-config-sample.php
+	sed -i "s/database_name_here/$DB_NAME/g" /var/www/html/wordpress/wp-config-sample.php
+	sed -i "s/localhost/$DB_HOSTNAME/g" /var/www/html/wordpress/wp-config-sample.php
+	sed -i "s/username_here/$DB_USER/g" /var/www/html/wordpress/wp-config-sample.php
+	sed -i "s/password_here/$DB_PASSWORD/g" /var/www/html/wordpress/wp-config-sample.php
 	cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 fi
 
