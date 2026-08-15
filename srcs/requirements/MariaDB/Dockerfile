@@ -1,17 +1,12 @@
-FROM alpine:3.24
+FROM debian:bookworm
 
-RUN apk update && apk add --no-cache mariadb mariadb-client gettext su-exec && \
-	mkdir -p /run/mysqld /docker-entrypoint-initdb.d /var/lib/mysql && \
-	chown -R mysql:mysql /run/mysqld /var/lib/mysql
+RUN apt-get update && apt-get install -y mariadb-server
 
-COPY ./conf/server.cnf /etc/mysql/my.cnf
-COPY ./tools/init.sql.template /docker-entrypoint-initdb.d/
-RUN mkdir -p /usr/local/bin/
-COPY ./tools/entrypoint.sh /usr/local/bin/entrypoint.sh
-
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY tools/maria_init.sh /maria_init.sh
+COPY ./conf/server.cnf /etc/mysql/mariadb.conf.d/server.cnf
+RUN chmod +x /maria_init.sh
 
 EXPOSE 3306
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT [ "/maria_init.sh" ]
 CMD ["mariadbd"]
