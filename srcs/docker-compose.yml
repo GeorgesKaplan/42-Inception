@@ -5,6 +5,8 @@ services:
     build:
       context: ./requirements/MariaDB
       dockerfile: Dockerfile
+    image: mariadb:inception
+    container_name: mariadb
     # Load .env
     env_file:
       - .env
@@ -24,8 +26,12 @@ services:
     build:
       context: ./requirements/WordPress
       dockerfile: Dockerfile
+    image: wordpress:inception
+    container_name: wordpress
     env_file:
       - .env
+    depends_on:
+      - mariadb
     networks:
       - inception
     volumes:
@@ -37,10 +43,16 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
+    image: nginx:inception
+    container_name: nginx
     env_file:
       - .env
+    depends_on:
+      - mariadb
     ports: # Port forwarding, allows access from outside Docker container
       - 443:443 # host:container
+    volumes:
+      - website_data:/var/www/html
     networks:
       - inception
     restart: always
@@ -53,4 +65,14 @@ networks:
 # Save data outside of container
 volumes:
   database_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/dnantet/Documents/Inception/data/mariadb
   website_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/dnantet/Documents/Inception/data/wordpress
