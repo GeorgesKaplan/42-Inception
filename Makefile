@@ -1,5 +1,5 @@
 COMPOSE_PATH	= ./srcs/docker-compose.yml
-DATA_PATH		= /home/dnantet/Documents/Inception/data
+DATA_PATH		= /home/dnantet/data
 
 all: build
 
@@ -16,6 +16,11 @@ up:
 down:
 	docker compose -f $(COMPOSE_PATH) down
 
-# TODO: clean
+clean:
+	docker stop $(docker ps -qa); \
+	docker rm $(docker ps -qa); \
+	docker rmi -f $(docker images -qa); \
+	docker volume rm $(docker volume ls -q); \
+	docker network rm $(docker network ls -q) 2>/dev/null
 
 .PHONY: all build up down

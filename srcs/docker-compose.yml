@@ -69,10 +69,10 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/dnantet/Documents/Inception/data/mariadb
+      device: /home/dnantet/data/mariadbd
   website_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/dnantet/Documents/Inception/data/wordpress
+      device: /home/dnantet/data/wordpress
