@@ -10,7 +10,7 @@ services:
       - .env
     environment:
       DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PASS: ${DB_PASS}
     ports:
       - "3306:3306"
     networks:
