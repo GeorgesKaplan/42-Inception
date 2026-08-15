@@ -2,6 +2,7 @@ FROM debian:bookworm
 
 RUN apt-get update && apt-get install -y nginx openssl
 RUN rm /etc/nginx/sites-enabled/default
+RUN mkdir -p /etc/nginx/ssl
 
 COPY tools/configure.sh /tmp/configure.sh
 COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
