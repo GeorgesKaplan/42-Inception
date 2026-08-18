@@ -61,6 +61,7 @@ Volumes are Docker-managed storage isolated from the host, ideal for data that s
 
 ### Documentation
 
+- Other students who already completed the project
 - [Official Docker documentation](https://docs.docker.com)
 - A lot of Youtube tutorials, but mainly these three:
     - [Get Started](https://www.youtube.com/watch?v=DQdB7wFEygo)
